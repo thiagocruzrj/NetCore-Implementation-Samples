@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using RabbitMQ_Messages.Configuration;
 
 namespace RabbitMQ_Messages
 {
@@ -25,6 +27,13 @@ namespace RabbitMQ_Messages
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var rabbitConfig = new RabbitMQEntityConfiguration();
+            new ConfigureFromConfigurationOptions<RabbitMQEntityConfiguration>(
+                Configuration.GetSection("RabbitMQEntityConfiguration"))
+                    .Configure(rabbitConfig);
+
+            services.AddSingleton(rabbitConfig);
+
             services.AddControllers();
         }
 
