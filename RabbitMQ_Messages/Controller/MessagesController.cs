@@ -3,15 +3,12 @@ using RabbitMQ.Client;
 using RabbitMQ_Messages.Configuration;
 using RabbitMQ_Messages.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RabbitMQ_Messages.Controller
 {
     [ApiController]
-    [Route("Controller")]
+    [Route("[Controller]")]
     public class MessagesController : ControllerBase
     {
         private static Counter _Conter = new Counter();
