@@ -1,8 +1,6 @@
 ﻿using Refir_JWT_Polly.Models;
 using Refit;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Refir_JWT_Polly.Interfaces

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Refir_JWT_Polly.Models
+﻿namespace Refir_JWT_Polly.Models
 {
     public class User
     {
