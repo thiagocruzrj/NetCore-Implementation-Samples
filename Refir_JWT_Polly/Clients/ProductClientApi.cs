@@ -15,11 +15,11 @@ namespace Refit_JWT_Polly.Clients
 {
     public class ProductClientApi
     {
-        private ILoginApi _loginApi;
-        private IProductsApi _productsApi;
-        private IConfiguration _configuration;
+        private readonly ILoginApi _loginApi;
+        private readonly IProductsApi _productsApi;
+        private readonly IConfiguration _configuration;
         private Token _token;
-        private AsyncRetryPolicy _jwtPolicy;
+        private readonly AsyncRetryPolicy _jwtPolicy;
 
         public bool IsAuthenticatedUsingToken { get => _token?.Authenticated ?? false ;}
 
