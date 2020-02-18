@@ -1,11 +1,11 @@
 ﻿using Polly;
 using Polly.Retry;
-using Refir_JWT_Polly.Models;
+using Refit_JWT_Polly.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Refir_JWT_Polly.Extensions
+namespace Refit_JWT_Polly.Extensions
 {
     public static class RetryPolicyExtensions
     {

@@ -1,8 +1,8 @@
-﻿using Refir_JWT_Polly.Models;
+﻿using Refit_JWT_Polly.Models;
 using Refit;
 using System.Threading.Tasks;
 
-namespace Refir_JWT_Polly.Interfaces
+namespace Refit_JWT_Polly.Interfaces
 {
     public interface ILoginApi
     {

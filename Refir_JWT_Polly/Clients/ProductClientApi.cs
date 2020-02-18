@@ -1,15 +1,17 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Polly;
 using Polly.Retry;
-using Refir_JWT_Polly.Extensions;
-using Refir_JWT_Polly.Interfaces;
-using Refir_JWT_Polly.Models;
+using Refit_JWT_Polly.Extensions;
+using Refit_JWT_Polly.Interfaces;
+using Refit_JWT_Polly.Models;
 using Refit;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Net;
 
-namespace Refir_JWT_Polly.Clients
+namespace Refit_JWT_Polly.Clients
 {
     public class ProductClientApi
     {
@@ -41,6 +43,7 @@ namespace Refir_JWT_Polly.Clients
                         UserId = _configuration.GetSection("ApiProducts_Access:UserId").Value,
                         Password = _configuration.GetSection("ApiProducts_Access:Password").Value
                     }).Result;
+                return Console.Out.WriteLineAsync(JsonSerializer.Serialize(_token));
             }
             catch
             {
@@ -62,9 +65,37 @@ namespace Refir_JWT_Polly.Clients
             return Console.Out.WriteLineAsync(JsonSerializer.Serialize(inclusion.Result));
         }
 
+        public Task ListProducts()
+        {
+            var consult = _jwtPolicy.ExecuteWithTokenAsync<List<Product>>(
+                _token, async (context) =>
+                {
+                    var result = await _productsApi.ListProducts(
+                        $"Bearer {context["AccessToken"]}");
+                    return result;
+                });
+
+            return Console.Out.WriteLineAsync("Products registered: " + JsonSerializer.Serialize(consult.Result));
+        }
+
         private AsyncRetryPolicy CreateAccessTokenPolicy()
         {
-            throw new NotImplementedException();
+            return Policy
+                .HandleInner<ApiException>(
+                ex => ex.StatusCode == HttpStatusCode.Unauthorized)
+                .RetryAsync(1, async (ex, retryCount, context) =>
+                {
+                    var previoslyColor = Console.ForegroundColor;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    await Console.Out.WriteAsync("Execution of RetryPolicy ...");
+                    Console.ForegroundColor = previoslyColor;
+
+                    await Authenticate();
+                    if (!(_token?.Authenticated ?? false))
+                        throw new InvalidOperationException("Invalid token!");
+
+                    context["AccessToken"] = _token.AccessToken;
+                });
         }
     }
 }

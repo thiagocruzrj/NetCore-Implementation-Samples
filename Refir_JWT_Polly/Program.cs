@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Refir_JWT_Polly
+namespace Refit_JWT_Polly
 {
     class Program
     {

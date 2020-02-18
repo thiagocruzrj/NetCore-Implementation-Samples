@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Refir_JWT_Polly.Models
+namespace Refit_JWT_Polly.Models
 {
     public class ApiProductsResult
     {
